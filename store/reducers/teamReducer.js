@@ -39,14 +39,14 @@ export const teamReducer = (state = initialState, action) => {
       return state;
 
     case types.UPDATE_TEAM:
-      let updatedTeams = [...action.payload.teamState, ...action.payload.team];
+      let updatedTeamState = { ...action.payload.teamState };
+      updatedTeamState.teams.push(action.payload.team);
+
       window.localStorage.setItem(
         TEAMS_STORE_KEY,
-        JSON.stringify(updatedTeams)
+        JSON.stringify(updatedTeamState)
       );
-      return {
-        updatedTeams,
-      };
+      return updatedTeamState;
     default:
       return state;
   }

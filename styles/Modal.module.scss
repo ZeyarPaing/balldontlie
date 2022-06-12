@@ -9,6 +9,7 @@
   background-color: $primaryTransparent;
   display: grid;
   place-items: center;
+  z-index: 2;
 
   & > section {
     max-width: 50rem;

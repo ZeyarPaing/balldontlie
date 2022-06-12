@@ -1,6 +1,48 @@
+@import "colors";
 
 .teamsHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.teamsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+
+}
+
+.teamCard {
+  padding: 20px 30px;
+  border: 2px solid $primaryLight;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    background-color: $primaryTransparent;
+    color: #fff;
+  }
+
+  h2 {
+    margin: 7px 0;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  button {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    border-color: red;
+    color: red;
+    background-color: #fff;
+    font-size: 12px;
+    padding: 5px 8px;
+    cursor: pointer;
+  }
 }

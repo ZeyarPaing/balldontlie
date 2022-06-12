@@ -3,33 +3,57 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import styles from "../styles/Team.module.scss";
 import ModalPopup from "../components/ModalPopup";
+import Team from "../components/Team";
 
 export default function Teams() {
   const teamState = useSelector((state) => state.team);
-  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(null);
+  const [teamData, setTeamData] = useState({});
   const [render, setRender] = useState(false);
   useEffect(() => {
     setRender(true);
   }, []);
+
+  function handleEdit(currentData) {
+    setTeamData(currentData);
+    setModalType("update");
+  }
+
+  function handleDelete(name) {
+    console.log("delete : ", name);
+  }
+
   return (
     <Layout>
       <section className="container">
         <div className={styles.teamsHeader}>
           <h1 className="title">Teams</h1>
           <div>
-            <button className="primary-btn" onClick={() => setShowModal(true)}>
+            <button
+              className="primary-btn"
+              onClick={() => setModalType("create")}
+            >
               Create Team
             </button>
           </div>
         </div>
-        {showModal && (
-          <ModalPopup type={"create"} onClose={() => setShowModal(false)} />
+        {modalType && (
+          <ModalPopup
+            type={modalType}
+            prevData={teamData}
+            onClose={() => setModalType(null)}
+          />
         )}
         {render && (
           <section className={styles.teamsContainer}>
             {teamState.teams.length
               ? teamState.teams.map((team) => (
-                  <div key={team.name}>{team.name}</div>
+                  <Team
+                    key={team.name}
+                    team={team}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
                 ))
               : "No teams yet, create one."}
           </section>

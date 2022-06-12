@@ -49,8 +49,8 @@ export const updateTeam = (updatedTeam, prevTeam, teamState) => (dispatch) => {
   let delIdx = teamState.teams.findIndex(
     (team) => team.name.toLowerCase() === prevTeam.name.toLowerCase()
   );
-  let newTeamState = [...teamState];
-  newTeamState.splice(delIdx, 1);
+  let newTeamState = { teams: [...teamState.teams] };
+  newTeamState.teams.splice(delIdx, 1);
 
   let error = validateTeam(updatedTeam, newTeamState);
 

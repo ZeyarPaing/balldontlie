@@ -1,14 +1,15 @@
 import styles from "../styles/Modal.module.scss";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTeam } from "../store/actions/teamActions";
+import { createTeam, updateTeam } from "../store/actions/teamActions";
 import Image from "next/image";
 
-const ModalPopup = ({ type, onClose }) => {
-  const [teamName, setName] = useState("");
-  const [country, setCountry] = useState("");
-  const [region, setRegion] = useState("");
-  const [playerCount, setPlayerCount] = useState(0);
+const ModalPopup = ({ type, onClose, prevData }) => {
+  console.log("prevdata : ", prevData);
+  const [teamName, setName] = useState(prevData?.name || "");
+  const [country, setCountry] = useState(prevData?.country || "");
+  const [region, setRegion] = useState(prevData?.region || "");
+  const [playerCount, setPlayerCount] = useState(prevData?.playerCount || 0);
   const [errors, setErrors] = useState({
     name: null,
     country: null,
@@ -47,17 +48,30 @@ const ModalPopup = ({ type, onClose }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     let res = dispatch(
-      createTeam(
-        {
-          name: teamName,
-          country: country,
-          region: region,
-          players: [],
-          playerCount,
-        },
-        teamState
-      )
+      type === "create"
+        ? createTeam(
+            {
+              name: teamName,
+              country: country,
+              region: region,
+              players: [],
+              playerCount,
+            },
+            teamState
+          )
+        : updateTeam(
+            {
+              name: teamName,
+              country: country,
+              region: region,
+              players: [],
+              playerCount,
+            },
+            prevData,
+            teamState
+          )
     );
     if (res.success) {
       onClose();
@@ -76,22 +90,27 @@ const ModalPopup = ({ type, onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className={styles.formGp}>
             <label>Team Name</label>
-            <input onChange={handleNameInput} type="text" />
+            <input value={teamName} onChange={handleNameInput} type="text" />
             <small>{errors.name || ""}</small>
           </div>
           <div className={styles.formGp}>
             <label>Country</label>
-            <input onChange={handleCountryInput} type="text" />
+            <input value={country} onChange={handleCountryInput} type="text" />
             <small>{errors.country || ""}</small>
           </div>
           <div className={styles.formGp}>
             <label>Region</label>
-            <input onChange={handleRegionInput} type="text" />
+            <input value={region} onChange={handleRegionInput} type="text" />
             <small>{errors.region || ""}</small>
           </div>
           <div className={styles.formGp}>
             <label>Player Count</label>
-            <input onChange={handleCountInput} type="number" min={1} />
+            <input
+              value={playerCount}
+              onChange={handleCountInput}
+              type="number"
+              min={1}
+            />
             <small>{errors.playerCount || ""}</small>
           </div>
           {type === "update" && (
