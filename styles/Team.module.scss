@@ -19,7 +19,6 @@
   border-radius: 7px;
   cursor: pointer;
   transition: all 0.3s ease;
-  position: relative;
 
   &:hover {
     background-color: $primaryTransparent;
@@ -35,9 +34,6 @@
   }
 
   button {
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
     border-color: red;
     color: red;
     background-color: #fff;

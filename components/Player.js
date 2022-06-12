@@ -2,6 +2,7 @@ import styles from "../styles/Players.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addMemberPlayer } from "../store/actions/teamActions";
+import { toast } from "react-toastify";
 
 const Player = ({ player, skeleton }) => {
   const teamState = useSelector((state) => state.team);
@@ -11,7 +12,11 @@ const Player = ({ player, skeleton }) => {
   function handleAdd(team) {
     setShowPopover(false);
     let res = dispatch(addMemberPlayer(team, player));
-    console.log("res ; res : ", res);
+    if (res.success) {
+      toast.success("Player added to " + team.name);
+    } else {
+      toast.error(res.error);
+    }
   }
 
   if (skeleton) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Layout from "../components/Layout";
 import styles from "../styles/Team.module.scss";
 import ModalPopup from "../components/ModalPopup";
@@ -10,6 +10,7 @@ export default function Teams() {
   const [modalType, setModalType] = useState(null);
   const [teamData, setTeamData] = useState({});
   const [render, setRender] = useState(false);
+
   useEffect(() => {
     setRender(true);
   }, []);
@@ -17,10 +18,6 @@ export default function Teams() {
   function handleEdit(currentData) {
     setTeamData(currentData);
     setModalType("update");
-  }
-
-  function handleDelete(name) {
-    console.log("delete : ", name);
   }
 
   return (
@@ -48,12 +45,7 @@ export default function Teams() {
           <section className={styles.teamsContainer}>
             {teamState.teams.length
               ? teamState.teams.map((team) => (
-                  <Team
-                    key={team.name}
-                    team={team}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                  />
+                  <Team key={team.name} team={team} onEdit={handleEdit} />
                 ))
               : "No teams yet, create one."}
           </section>

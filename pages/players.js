@@ -27,10 +27,6 @@ export default function Players() {
     }, t);
   }
 
-  function addBtnClickHandler(player) {
-    console.log("palyer : ", player);
-  }
-
   return (
     <Layout>
       <div className="container">
@@ -44,7 +40,7 @@ export default function Players() {
               />
             ))}
             {playerState.canLoadMore ? (
-              Array(3)
+              Array(!playerState.players.length ? 9 : 3)
                 .fill(0)
                 .map((e, idx) => <Player key={idx} skeleton={true} />)
             ) : (

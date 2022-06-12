@@ -45,7 +45,6 @@ export const createTeam = (team, teamState) => (dispatch) => {
 };
 
 export const updateTeam = (updatedTeam, prevTeam, teamState) => (dispatch) => {
-  console.log("update team dispatched");
   //To omit name duplicate with the updated one and previous one, check with previous value removed state
   let delIdx = teamState.teams.findIndex(
     (team) => team.name.toLowerCase() === prevTeam.name.toLowerCase()
@@ -80,8 +79,30 @@ export const deleteTeam = (teamName) => (dispatch) => {
 };
 
 export const addMemberPlayer = (team, player) => (dispatch, getState) => {
+  let error = null;
+  const teamState = getState().team;
+
+  if (team.playerCount === team.players.length) {
+    error = "Player count limit reached!";
+  }
+  teamState.teams.forEach((t) => {
+    let idx = t.players.findIndex((member) => player.id === member.id);
+    if (idx !== -1) {
+      error =
+        t.name === team.name
+          ? "Player already joined this team"
+          : "Player is already a member of " + t.name;
+    }
+  });
+
+  if (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+
   let newTeam = { ...team };
   newTeam.players.push(player);
-  const teamState = getState().team;
   return dispatch(updateTeam(newTeam, team, teamState));
 };

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createTeam, updateTeam } from "../store/actions/teamActions";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 const ModalPopup = ({ type, onClose, prevData }) => {
-  console.log("prevdata : ", prevData);
   const [teamName, setName] = useState(prevData?.name || "");
   const [country, setCountry] = useState(prevData?.country || "");
   const [region, setRegion] = useState(prevData?.region || "");
@@ -63,7 +63,7 @@ const ModalPopup = ({ type, onClose, prevData }) => {
       type === "create"
         ? createTeam(
             {
-              name: teamName,
+              name: teamName.trim(),
               country,
               region,
               players: [],
@@ -73,7 +73,7 @@ const ModalPopup = ({ type, onClose, prevData }) => {
           )
         : updateTeam(
             {
-              name: teamName,
+              name: teamName.trim(),
               country,
               region,
               players,
@@ -84,6 +84,7 @@ const ModalPopup = ({ type, onClose, prevData }) => {
           )
     );
     if (res.success) {
+      toast.success("Successfully " + type + "d.");
       onClose();
     } else {
       setErrors({ ...res.error });

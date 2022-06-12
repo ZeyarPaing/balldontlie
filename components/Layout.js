@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { logout } from "../store/actions/authActions";
 import { useRouter } from "next/router";
+import Confirm from "./Confirm";
 
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const [render, setRender] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -42,7 +44,11 @@ const Layout = ({ children }) => {
             </span>
             <span>
               <a>{authState?.user?.name}</a>
-              <a href="#" onClick={() => dispatch(logout())}>
+              <a
+                href="#"
+                className={styles.logoutBtn}
+                onClick={() => setShowLogoutConfirm(true)}
+              >
                 Logout
               </a>
             </span>
@@ -51,7 +57,15 @@ const Layout = ({ children }) => {
       ) : (
         <></>
       )}
-
+      {showLogoutConfirm && (
+        <Confirm
+          onConfirm={() => dispatch(logout())}
+          onCancel={() => setShowLogoutConfirm(false)}
+          title="Are you sure?"
+          message="Are you sure to logout the account? Persisted data won't be deleted."
+          okText="Logout"
+        />
+      )}
       <main className={styles.mainContent}>{children}</main>
     </>
   );
