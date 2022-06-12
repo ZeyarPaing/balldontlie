@@ -1,0 +1,32 @@
+@import "colors";
+
+.navBar {
+  background-color: $primaryColor;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+      display: inline-block;
+      padding: 20px 10px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+  }
+
+}
+
+.mainContent {
+  padding-top: 80px;
+}

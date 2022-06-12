@@ -1,0 +1,55 @@
+@import "colors";
+
+s
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, "SF Pro Display", "SF Pro Text", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+label {
+  font-weight: 600;
+  color: $primaryColor;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+input, button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 2px solid $primaryPale;
+
+  &:focus {
+    outline-offset: 2px;
+    border-color: $primaryColor;
+    outline-color: rgba(86, 86, 86, 0.53);
+  }
+}
+
+.primary-btn {
+  color: #fff;
+  background-color: $primaryColor;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primaryPale;
+    border-color: $primaryPale;
+  }
+
+
+}
