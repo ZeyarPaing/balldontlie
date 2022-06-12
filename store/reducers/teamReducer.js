@@ -10,13 +10,13 @@ if (typeof window != "undefined") {
   storedTeams = JSON.parse(window.localStorage.getItem(TEAMS_STORE_KEY));
 }
 const initialState = {
-  teams: storedTeams || [],
+  teams: storedTeams?.teams || [],
 };
 export const teamReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.CREATE_TEAM:
       let teams = [...state.teams, action.payload];
-      window.localStorage.setItem(TEAMS_STORE_KEY, JSON.stringify(teams));
+      window.localStorage.setItem(TEAMS_STORE_KEY, JSON.stringify({ teams }));
       return {
         teams,
       };
@@ -28,13 +28,9 @@ export const teamReducer = (state = initialState, action) => {
       if (delIdx !== -1) {
         let teamsClone = [...state.teams];
         teamsClone.splice(delIdx, 1);
-        window.localStorage.setItem(
-          TEAMS_STORE_KEY,
-          JSON.stringify(teamsClone)
-        );
-        return {
-          teams: teamsClone,
-        };
+        let newTeam = { teams: teamsClone };
+        window.localStorage.setItem(TEAMS_STORE_KEY, JSON.stringify(newTeam));
+        return newTeam;
       }
       return state;
 

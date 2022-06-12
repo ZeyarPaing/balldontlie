@@ -1,20 +1,21 @@
 import styles from "../styles/Players.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { addMemberPlayer } from "../store/actions/teamActions";
 
 const Player = ({ player, skeleton }) => {
+  const teamState = useSelector((state) => state.team);
+  const dispatch = useDispatch();
+  const [showPopover, setShowPopover] = useState(false);
+
+  function handleAdd(team) {
+    setShowPopover(false);
+    let res = dispatch(addMemberPlayer(team, player));
+    console.log("res ; res : ", res);
+  }
+
   if (skeleton) {
-    return (
-      <div className={`${styles.playerSkeleton} ${styles.player}`}>
-        <h3></h3>
-        <span></span>
-        <hr />
-        <p></p>
-        <div className={styles.team}>
-          <h4></h4>
-          <p></p>
-          <p></p>
-        </div>
-      </div>
-    );
+    return <div className={`${styles.playerSkeleton} ${styles.player}`} />;
   }
   return (
     <div className={styles.player}>
@@ -24,7 +25,6 @@ const Player = ({ player, skeleton }) => {
       <span>Position</span>
       <span className={styles.position}>{player.position || "N/A"}</span>
       <hr />
-      <p>TEAM</p>
       <div className={styles.team}>
         <h4>{player.team.full_name}</h4>
         <span className={styles.position}>{player.team.abbreviation}</span>
@@ -32,6 +32,23 @@ const Player = ({ player, skeleton }) => {
         <p>
           {player.team.conference} {player.team.division}
         </p>
+        <div className={styles.btnWrap}>
+          <button
+            onClick={() => setShowPopover(!showPopover)}
+            className="primary-btn"
+          >
+            Add to
+          </button>
+          {showPopover && (
+            <div className={styles.teamsPopover}>
+              {teamState.teams.map((team) => (
+                <a onClick={() => handleAdd(team)} key={team.name}>
+                  {team.name}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@
   }
 
   .player {
-    padding: 20px 27px 35px;
+    padding: 20px 27px;
     //border: 2px solid $primaryLight;
     border-radius: 10px;
     background-color: $primaryColor;
@@ -59,11 +59,42 @@
       .position {
         margin: 0;
       }
+
+      button {
+        padding: 5px 10px;
+      }
+
+      .btnWrap {
+        text-align: right;
+        position: relative;
+
+        .teamsPopover {
+          position: absolute;
+          right: 0;
+          top: 40px;
+          background-color: #fff;
+          color: #000;
+          border-radius: 5px;
+          padding: 5px 0;
+          font-size: 15px;
+          box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.16);
+
+          a {
+            padding: 5px 10px;
+            display: block;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #e8e8e8;
+            }
+          }
+        }
+      }
     }
   }
 
   .playerSkeleton {
-    min-height: 300px;
+    min-height: 270px;
     width: 100%;
     background-color: #797979;
     animation: fade ease-in-out infinite 3s;

@@ -27,6 +27,10 @@ export default function Players() {
     }, t);
   }
 
+  function addBtnClickHandler(player) {
+    console.log("palyer : ", player);
+  }
+
   return (
     <Layout>
       <div className="container">

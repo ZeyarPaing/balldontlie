@@ -10,6 +10,7 @@ const ModalPopup = ({ type, onClose, prevData }) => {
   const [country, setCountry] = useState(prevData?.country || "");
   const [region, setRegion] = useState(prevData?.region || "");
   const [playerCount, setPlayerCount] = useState(prevData?.playerCount || 0);
+  const [players, setPlayers] = useState(prevData?.players || []);
   const [errors, setErrors] = useState({
     name: null,
     country: null,
@@ -46,6 +47,15 @@ const ModalPopup = ({ type, onClose, prevData }) => {
     setPlayerCount(userInput);
   }
 
+  function removePlayer(player) {
+    let idx = players.indexOf(player);
+    if (idx !== -1) {
+      let playersClone = [...players];
+      playersClone.splice(idx, 1);
+      setPlayers(playersClone);
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -54,8 +64,8 @@ const ModalPopup = ({ type, onClose, prevData }) => {
         ? createTeam(
             {
               name: teamName,
-              country: country,
-              region: region,
+              country,
+              region,
               players: [],
               playerCount,
             },
@@ -64,9 +74,9 @@ const ModalPopup = ({ type, onClose, prevData }) => {
         : updateTeam(
             {
               name: teamName,
-              country: country,
-              region: region,
-              players: [],
+              country,
+              region,
+              players,
               playerCount,
             },
             prevData,
@@ -117,7 +127,23 @@ const ModalPopup = ({ type, onClose, prevData }) => {
             <div className={styles.formGp}>
               <label>Players</label>
               <div className={styles.memberContainer}>
-                <div className={styles.emptyContainer}>No members yet.</div>
+                {players.length ? (
+                  players.map((player, idx) => (
+                    <div className={styles.member} key={idx}>
+                      <span>
+                        {player.first_name} {player.last_name}
+                      </span>
+                      <Image
+                        onClick={() => removePlayer(player)}
+                        src="/close.svg"
+                        width={16}
+                        height={16}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className={styles.emptyContainer}>No members yet.</div>
+                )}
               </div>
             </div>
           )}
