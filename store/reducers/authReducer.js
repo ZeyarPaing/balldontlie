@@ -5,7 +5,6 @@ let storedState;
 if (typeof window != "undefined") {
   storedState = JSON.parse(window.localStorage.getItem(AUTH_STORE_KEY));
 }
-console.log("stored state ", storedState);
 
 const initialState = storedState || {
   authenticated: false,

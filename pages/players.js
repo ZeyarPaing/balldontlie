@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPlayers } from "../store/actions/playerActions";
 import Layout from "../components/Layout";
@@ -9,24 +9,35 @@ import ScrollDetector from "../components/ScrollDetector";
 export default function Players() {
   const dispatch = useDispatch();
   const playerState = useSelector((state) => state.player);
+
   useEffect(() => {
-    dispatch(fetchPlayers(playerState.page, playerState.limit));
+    !playerState.players.length && debounceFetch(50); //to prevent strict mode call twice useEffect
   }, []);
 
   function handleScrollEnd() {
-    console.log("scroll invoke");
-    playerState.canLoadMore &&
-      dispatch(fetchPlayers(playerState.page, playerState.limit));
+    dispatch(fetchPlayers());
+  }
+
+  let handler;
+
+  function debounceFetch(t = 800) {
+    clearTimeout(handler);
+    handler = setTimeout(function () {
+      handleScrollEnd();
+    }, t);
   }
 
   return (
     <Layout>
       <div className="container">
         <h1 className="title">Players</h1>
-        <ScrollDetector onScrollEnd={handleScrollEnd}>
+        <ScrollDetector onScrollEnd={debounceFetch}>
           <section className={styles.playersContainer}>
-            {playerState.players.map((player) => (
-              <Player player={player} key={player.id} />
+            {playerState.players.map((player, idx) => (
+              <Player
+                player={player}
+                key={player.first_name + player.id + idx}
+              />
             ))}
             {playerState.canLoadMore ? (
               Array(3)

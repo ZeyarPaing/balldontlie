@@ -52,6 +52,13 @@ input, button {
   }
 }
 
+button:disabled {
+  background-color: #797979;
+  border-color: #797979;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .primary-btn {
   color: #fff;
   background-color: $primaryColor;

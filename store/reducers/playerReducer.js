@@ -4,7 +4,6 @@ import { PLAYER_FETCH_LIMIT } from "../../src/helper/globalConst";
 const initialState = {
   players: [],
   page: 0,
-  limit: PLAYER_FETCH_LIMIT,
   canLoadMore: true,
 };
 export const playerReducer = (state = initialState, action) => {
