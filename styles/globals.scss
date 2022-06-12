@@ -1,11 +1,11 @@
 @import "colors";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-s
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, "SF Pro Display", "SF Pro Text", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a {
@@ -19,7 +19,18 @@ a {
 
 .container {
   max-width: 1000px;
+  padding: 0 10px;
   margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  margin: 2rem 0;
+
+  @media screen and (max-width: 600px) {
+    margin-top: 5rem;
+  }
 }
 
 label {

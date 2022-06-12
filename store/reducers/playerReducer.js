@@ -5,15 +5,17 @@ const initialState = {
   players: [],
   page: 0,
   limit: PLAYER_FETCH_LIMIT,
+  canLoadMore: true,
 };
-
 export const playerReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_PLAYERS:
+      const { players, total } = action.payload;
       return {
         ...state,
         page: state.page + 1,
-        players: [...state.players, ...action.payload],
+        canLoadMore: state.players.length < total,
+        players: [...state.players, ...players],
       };
     default:
       return state;

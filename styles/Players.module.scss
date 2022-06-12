@@ -1,4 +1,84 @@
+@import "colors";
+
 .playersContainer {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding-bottom: 10px;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .player {
+    padding: 20px 27px 35px;
+    //border: 2px solid $primaryLight;
+    border-radius: 10px;
+    background-color: $primaryColor;
+    color: #fff;
+
+    h3 {
+      margin: 3px 0;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    span {
+      font-weight: 300;
+
+    }
+
+    .position {
+      border: 1px solid $primaryPale;
+      padding: 0px 5px;
+      margin-left: 5px;
+      border-radius: 5px;
+    }
+
+    hr {
+      padding-top: 10px;
+      border: none;
+      border-bottom: 1px solid $primaryPale;
+    }
+
+    p {
+      color: $primaryLight;
+      font-weight: 500;
+      margin: 5px 0 0;
+    }
+
+    .team {
+      h4 {
+        margin: 0 0 5px;
+        font-size: 20px;
+      }
+
+      .position {
+        margin: 0;
+      }
+    }
+  }
+
+  .playerSkeleton {
+    min-height: 300px;
+    width: 100%;
+    background-color: #797979;
+    animation: fade ease-in-out infinite 3s;
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0.1;
+    }
+  }
+
 }
