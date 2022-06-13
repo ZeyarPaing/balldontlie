@@ -24,7 +24,8 @@ const Team = ({ team, onEdit }) => {
         <p>
           {team.region}, {team.country}
         </p>
-        <p>Player Count - {team.playerCount}</p>
+        <p>Player Count - {team.players.length}</p>
+        <p>Player Count (Max) - {team.playerCount}</p>
         <button onClick={deleteHandler}>Delete</button>
       </div>
       {deleteConfirm && (

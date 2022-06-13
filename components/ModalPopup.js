@@ -115,7 +115,7 @@ const ModalPopup = ({ type, onClose, prevData }) => {
             <small>{errors.region || ""}</small>
           </div>
           <div className={styles.formGp}>
-            <label>Player Count</label>
+            <label>(Max) Player Count</label>
             <input
               value={playerCount}
               onChange={handleCountInput}
